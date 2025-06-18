@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Send a Message</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      text-align: center;
+      padding: 40px;
+    }
+    textarea {
+      width: 300px;
+      height: 100px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Send Me a Message 💬</h2>
+  <textarea id="message" placeholder="Type your message here..."></textarea><br>
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    function sendMessage() {
+      const msg = document.getElementById("message").value.trim();
+
+      if (!msg) {
+        alert("Please type something.");
+        return;
+      }
+
+      fetch("https://webhook.site/30a5c9cc-7fd4-4111-863b-d5f951003ff8", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: msg })
+      })
+      .then(() => {
+        alert("Message sent successfully!");
+        document.getElementById("message").value = "";
+      })
+      .catch((error) => {
+        alert("Something went wrong.");
+        console.error(error);
+      });
+    }
+  </script>
+</body>
+</html>
